@@ -18,7 +18,7 @@ func main() {
 	r.Static("/static", "./static")
 	r.GET("/screenshot", screenshot)
 	r.GET("/", index)
-	r.Run(":80")
+	r.Run(":8080")
 }
 
 var ips map[string]int = map[string]int{}
