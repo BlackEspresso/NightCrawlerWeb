@@ -29,7 +29,7 @@
             {{.toScreenshot}}
         </a>
         <br>
-        <a class="button" id="btnScreenshot" value="Click">
+        <a onclick="submit()" class="button" id="btnScreenshot" value="Click">
             <i class="fa fa-camera-retro"></i> Screenshot
         </a>
         </form>
@@ -72,6 +72,10 @@
 $(document).ready(function(){
 	$('form').submit(screenshot)
 })
+
+function submit(){
+	$('form').submit();
+}
 
 function screenshot(e){
 	e.preventDefault();
