@@ -18,7 +18,7 @@
 <div class="container" style="margin-top:20px;">
     <div class="row">
         <h3>Screenshot Website</h3>
-        <form id="webscreenshot">
+        <form id="formWebScreenshots">
         <input name="url" type="text" size="50" placeholder="http://google.com">
         <br>
         <div id="btnLoading" style="display:none;">
@@ -70,11 +70,11 @@
 
 <script>
 $(document).ready(function(){
-	$('form').submit(screenshot)
+	$('#formWebScreenshots').submit(screenshot)
 })
 
 function submit(){
-	$('form').submit();
+	$('#formWebScreenshots').submit();
 }
 
 function screenshot(e){
