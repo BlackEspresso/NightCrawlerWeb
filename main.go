@@ -89,7 +89,7 @@ func index(g *gin.Context) {
 func indexDE(g *gin.Context) {
 	g.HTML(200, "index.tmpl", gin.H{
 		"title":             "Screenshot Website",
-		"needmoresnaphosts": "Benötigen Sie mehr screenshots oder eine API?",
+		"needmoresnaphosts": "Benötigen Sie mehr Screenshots oder eine API?",
 		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
 		"gopro2":            "1000 Screenshots pro Monat & unbegrenztes teilen der Links",
 		"anyquestions":      "noch Fragen? schreiben Sie uns",

@@ -29,7 +29,7 @@
             {{.toScreenshot}}
         </a>
         <br>
-        <a onclick="submit()" class="button" id="btnScreenshot" value="Click">
+        <a class="button" id="btnScreenshot" value="Click">
             <i class="fa fa-camera-retro"></i> Screenshot
         </a>
         </form>
@@ -70,12 +70,9 @@
 
 <script>
 $(document).ready(function(){
-	$('#formWebScreenshots').submit(screenshot)
+	$('#formWebScreenshots').submit(screenshot);
+	$('#btnScreenshot').click(function(){$('#formWebScreenshots').submit();});
 })
-
-function submit(){
-	$('#formWebScreenshots').submit();
-}
 
 function screenshot(e){
 	e.preventDefault();
@@ -85,7 +82,7 @@ function screenshot(e){
         url: '/screenshot',
         type: 'get',
         dataType: 'text',
-        data: $('form#webscreenshot').serialize(),
+        data: $('#formWebScreenshots').serialize(),
         success: onScreenshotSuccess,
 		error:onScreenshotError
     });
