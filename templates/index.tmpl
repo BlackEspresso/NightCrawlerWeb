@@ -19,7 +19,7 @@
     <div class="row">
         <h3>Screenshot Website</h3>
         <form id="formWebScreenshots">
-        <input name="url" type="text" size="50" placeholder="http://google.com">
+        <input name="url" class="u-full-width" type="text" placeholder="http://google.com">
         <br>
         <div id="btnLoading" style="display:none;">
             <i class="fa fa-spinner fa-spin"></i>
@@ -38,19 +38,19 @@
 
 <div class="container">
 <p>
-{{.needmoresnaphosts}} {{.gopro1}}<br>
+{{.needmoresnaphosts}} {{.gopro1}} {{.price}}{{.currencysymbol}}<br>
 {{.gopro2}}
 </p>
 
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_xclick-subscriptions">
-<input type="hidden" name="business" value="marinuspfund@googlemail.com">
+<input type="hidden" name="business" value="{{.emailaddress}}">
 <input type="hidden" name="lc" value="BM">
 <input type="hidden" name="item_name" value="WebScreenshot Professional">
 <input type="hidden" name="item_number" value="102">
 <input type="hidden" name="no_note" value="1">
 <input type="hidden" name="src" value="1">
-<input type="hidden" name="a3" value="9.99">
+<input type="hidden" name="a3" value="{{.price}}">
 <input type="hidden" name="p3" value="1">
 <input type="hidden" name="t3" value="M">
 <input type="hidden" name="currency_code" value="{{.currencycode}}">

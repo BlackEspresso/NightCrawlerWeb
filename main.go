@@ -90,14 +90,15 @@ func indexDE(g *gin.Context) {
 	g.HTML(200, "index.tmpl", gin.H{
 		"title":             "Screenshot Website",
 		"needmoresnaphosts": "Benötigen Sie mehr screenshots oder eine API?",
-		"gopro1":            "Wechseln Sie zu Websnapshot Professional für 9,99€",
-		"gopro2":            "1000 snapshots pro Monat & unbegrenztes teilen der Links",
-		"anyquestions":      "noch fragen ? schreiben Sie uns ",
+		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
+		"gopro2":            "1000 Screenshots pro Monat & unbegrenztes teilen der Links",
+		"anyquestions":      "noch Fragen? schreiben Sie uns",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
 		"countrycode":       "de_DE",
 		"currencycode":      "EUR",
 		"currencysymbol":    "€",
 		"toScreenshot":      "Zum Screenshot",
+		"price":             "5.99",
 	})
 }
 
@@ -105,13 +106,14 @@ func indexEN(g *gin.Context) {
 	g.HTML(200, "index.tmpl", gin.H{
 		"title":             "Screenshot Website",
 		"needmoresnaphosts": "Need more than 10 snapshots ?",
-		"gopro1":            "Go Professional for 9.99$",
-		"gopro2":            "Get 1000 snapshots per month & unlimited image sharing",
+		"gopro1":            "Go Professional for",
+		"gopro2":            "Get 1000 screenshots per month & unlimited image sharing",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
-		"anyquestions":      "any questions? write us ",
+		"anyquestions":      "any questions? write us",
 		"countrycode":       "en_US",
 		"currencycode":      "USD",
 		"currencysymbol":    "$",
 		"toScreenshot":      "show screenshot",
+		"price":             "5.99",
 	})
 }
