@@ -2,6 +2,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,6 +13,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Settings struct {
+	AdminPassword string
+	AdminUsername string
+	Listening     string
+	Additional    map[string]string
+}
+
+var appSettings Settings = Settings{}
+var ips map[string]int = map[string]int{}
+var lastFree time.Time = time.Now()
+
 func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
@@ -19,18 +31,32 @@ func main() {
 	r.Static("/static", "./static")
 	r.GET("/screenshot", screenshot)
 	r.GET("/", index)
+	r.GET("/adminlogin", adminLogin)
 	r.GET("/de", indexDE)
 	r.GET("/en", indexEN)
-	if gin.IsDebugging() {
-		r.Run(":8080")
-	} else {
-		r.Run(":80")
-	}
 
+	appSettings = loadSettings()
+	r.Run(appSettings.Listening)
 }
 
-var ips map[string]int = map[string]int{}
-var lastFree time.Time = time.Now()
+func loadSettings() Settings {
+	fc, err := ioutil.ReadFile("settings.json")
+	checkFatal(err)
+	settings := Settings{}
+	err = json.Unmarshal(fc, &settings)
+	checkFatal(err)
+	return settings
+}
+
+func checkFatal(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func adminLogin(g *gin.Context) {
+
+}
 
 func screenshot(g *gin.Context) {
 	urlQuery := g.Query("url")
