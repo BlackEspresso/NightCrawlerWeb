@@ -5,38 +5,79 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
-	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/satori/go.uuid"
 )
 
 type Settings struct {
-	AdminPassword string
-	AdminUsername string
-	Listening     string
-	Additional    map[string]string
+	Listening  string
+	Additional map[string]string
+}
+
+type UserInfo struct {
+	Id            string
+	UsedRequests  int
+	MaxRequests   int
+	NextReset     time.Time
+	ResetDuration time.Duration
 }
 
 var appSettings Settings = Settings{}
 var ips map[string]int = map[string]int{}
 var lastFree time.Time = time.Now()
 
+var accounts gin.Accounts = gin.Accounts{}
+var profUsers map[string]*UserInfo = map[string]*UserInfo{}
+
 func main() {
+	appSettings = loadSettings()
+	profUsers = loadUsers()
+
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 
 	r.Static("/static", "./static")
-	r.GET("/screenshot", screenshot)
+	r.GET("/screenshot", screenshotPublic)
 	r.GET("/", index)
-	r.GET("/adminlogin", adminLogin)
 	r.GET("/de", indexDE)
 	r.GET("/en", indexEN)
+	r.GET("/users/:uid/screenshot", screenshotProfessional)
 
-	appSettings = loadSettings()
+	uname := appSettings.Additional["AdminUserName"]
+	pass := appSettings.Additional["AdminPassword"]
+	accounts[uname] = pass
+
+	authorized := r.Group("/admin", gin.BasicAuth(accounts))
+	authorized.GET("/info", adminInfo)
+
 	r.Run(appSettings.Listening)
+}
+
+func newUser() *UserInfo {
+	u := UserInfo{}
+	u.Id = uuid.NewV4().String()
+	u.MaxRequests = 10
+	u.ResetDuration = time.Duration(5*24) * time.Hour
+	u.NextReset = time.Now().Add(u.ResetDuration)
+	return &u
+}
+
+func loadUsers() map[string]*UserInfo {
+	fc, err := ioutil.ReadFile("./professionalusers.json")
+	checkFatal(err)
+	settings := map[string]*UserInfo{}
+	err = json.Unmarshal(fc, &settings)
+	checkFatal(err)
+	return settings
+}
+
+func saveUserInfo() {
+	content, err := json.Marshal(profUsers)
+	checkFatal(err)
+	err = ioutil.WriteFile("./professionalusers.json", content, 0655)
+	checkFatal(err)
 }
 
 func loadSettings() Settings {
@@ -52,94 +93,4 @@ func checkFatal(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func adminLogin(g *gin.Context) {
-
-}
-
-func screenshot(g *gin.Context) {
-	urlQuery := g.Query("url")
-
-	clientRequestCount, hasKey := ips[g.ClientIP()]
-	if !hasKey {
-		ips[g.ClientIP()] = 0
-	}
-	ips[g.ClientIP()] += 1
-
-	log.Println(g.ClientIP(), clientRequestCount)
-
-	//reset ip restriction after 1h
-	if time.Now().Sub(lastFree).Hours() > 1 {
-		lastFree = time.Now()
-		ips = map[string]int{}
-	}
-
-	// restrict client to 10 requests per hour
-	if clientRequestCount > 10 {
-		g.String(403, "too many requests from ip "+g.ClientIP()+", please wait")
-		return
-	}
-
-	apiurl, _ := url.Parse("http://localhost:8076/crawld/screenshot")
-	q := apiurl.Query()
-	q.Set("url", urlQuery)
-	apiurl.RawQuery = q.Encode()
-
-	res, err := http.Get(apiurl.String())
-	if err != nil {
-		log.Println(err)
-		g.String(403, "error, see logs")
-		return
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Println(err)
-		g.String(403, "error, see logs")
-		return
-	}
-	g.String(res.StatusCode, string(body))
-}
-
-func index(g *gin.Context) {
-	lang := g.Request.Header.Get("Accept-Language")
-	lang = strings.Split(lang, ";")[0]
-	log.Println(lang)
-	if strings.HasPrefix(lang, "de") {
-		g.Redirect(301, "/de")
-	} else {
-		g.Redirect(301, "/en")
-	}
-}
-
-func indexDE(g *gin.Context) {
-	g.HTML(200, "index.tmpl", gin.H{
-		"title":             "Screenshot Website",
-		"needmoresnaphosts": "Benötigen Sie mehr Screenshots oder eine API?",
-		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
-		"gopro2":            "1000 Screenshots pro Monat & unbegrenztes teilen der Links",
-		"anyquestions":      "noch Fragen? schreiben Sie uns",
-		"emailaddress":      "support@webscreenshot.ifempty.de",
-		"countrycode":       "de_DE",
-		"currencycode":      "EUR",
-		"currencysymbol":    "€",
-		"toScreenshot":      "Zum Screenshot",
-		"price":             "5.99",
-	})
-}
-
-func indexEN(g *gin.Context) {
-	g.HTML(200, "index.tmpl", gin.H{
-		"title":             "Screenshot Website",
-		"needmoresnaphosts": "Need more than 10 snapshots ?",
-		"gopro1":            "Go Professional for",
-		"gopro2":            "Get 1000 screenshots per month & unlimited image sharing",
-		"emailaddress":      "support@webscreenshot.ifempty.de",
-		"anyquestions":      "any questions? write us",
-		"countrycode":       "en_US",
-		"currencycode":      "USD",
-		"currencysymbol":    "$",
-		"toScreenshot":      "show screenshot",
-		"price":             "5.99",
-	})
 }

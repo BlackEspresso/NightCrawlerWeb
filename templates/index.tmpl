@@ -81,7 +81,7 @@ function screenshot(e){
 	$.ajax({
         url: '/screenshot',
         type: 'get',
-        dataType: 'text',
+        dataType: 'json',
         data: $('#formWebScreenshots').serialize(),
         success: onScreenshotSuccess,
 		error:onScreenshotError
@@ -101,18 +101,18 @@ function loadingButton(hide){
 	}
 }
 
-function onScreenshotSuccess(text){
+function onScreenshotSuccess(obj){
 	loadingButton(true)
 	
-	$('#downloadLink').attr('href',text).show();
+	$('#downloadLink').attr('href',obj.Link).show();
 	$('#errorText').text('').hide();
 }
 
 function onScreenshotError(data){
+	var errorText = data.responseJSON.Error
 	loadingButton(true)
-	var text = data.responseText;
 	$('#downloadLink').attr('href','').hide();
-	$('#errorText').text(text).show();
+	$('#errorText').text(errorText).show();
 }
 
 </script>
