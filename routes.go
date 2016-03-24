@@ -32,6 +32,7 @@ func getScreenshot(g *gin.Context) {
 
 	// build query
 	urlQuery := g.Query("url")
+	email := g.Query("email")
 	if urlQuery == "" {
 		res := ErrorResult{"url paramter is empty", 3}
 		g.JSON(403, res)
@@ -40,6 +41,7 @@ func getScreenshot(g *gin.Context) {
 	apiurl, _ := url.Parse("http://localhost:8076/crawld/screenshot")
 	q := apiurl.Query()
 	q.Set("url", urlQuery)
+	q.Set("email", email)
 	apiurl.RawQuery = q.Encode()
 
 	// query api
@@ -114,16 +116,27 @@ func screenshotPublic(g *gin.Context) {
 	}
 	ips[g.ClientIP()] += 1
 
+	email := g.Query("email")
+	if email == "" {
+		g.JSON(403, ErrorResult{"need url parameter", 4})
+	}
+
+	emailRequestCount, hasKey := usedEmails[email]
+	if !hasKey {
+		usedEmails[email] = 0
+	}
+	usedEmails[email] += 1
+
 	//reset ip restriction after 1h
-	if time.Now().Sub(lastFree).Hours() > 1 {
+	if time.Now().Sub(lastFree).Hours() > 3 {
 		lastFree = time.Now()
 		ips = map[string]int{}
+		usedEmails = map[string]int{}
 	}
 
 	// restrict client to 10 requests per hour
-	if clientRequestCount > 10 {
-		res := ErrorResult{"too many requests from ip " +
-			g.ClientIP() + ", please wait", 11}
+	if clientRequestCount > 10 || emailRequestCount > 10 {
+		res := ErrorResult{"too many requests from ip or to email, please wait", 11}
 		g.JSON(403, res)
 		return
 	}

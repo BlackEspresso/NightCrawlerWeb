@@ -26,6 +26,7 @@ type UserInfo struct {
 
 var appSettings Settings = Settings{}
 var ips map[string]int = map[string]int{}
+var usedEmails map[string]int = map[string]int{}
 var lastFree time.Time = time.Now()
 
 var accounts gin.Accounts = gin.Accounts{}

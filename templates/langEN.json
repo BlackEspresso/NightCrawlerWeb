@@ -5,9 +5,12 @@
 		"gopro2":            "Get 1000 screenshots per month & nearly unlimited image sharing",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
 		"anyquestions":      "any questions? write us",
+		"emaillabel":		 "send screenshot to mail",
+		"websitelabel": 	 "website to screenshot",
 		"countrycode":       "en_US",
 		"currencycode":      "USD",
 		"currencysymbol":    "$",
-		"toScreenshot":      "show screenshot",
+		"successText": 		 "mail will be send shortyl",
+		"mailscreenshot":    "send screenshot",
 		"price":             "5.99"
 	}

@@ -1,13 +1,16 @@
 {
 		"title":             "Screenshot Website",
-		"needmoresnaphosts": "Benötigen Sie mehr Screenshots oder eine API?",
+		"needmoresnaphosts": "Benötigen Sie mehr Screenshots oder wollen Sie die erstellung automatisieren?",
 		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
-		"gopro2":            "1000 Screenshots pro Monat & nahezu unbegrenztes teilen der Links",
+		"gopro2":            "1000 Screenshots pro Monat & nahezu unbegrenztes teilen der Links.",
 		"anyquestions":      "noch Fragen? schreiben Sie uns",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
+		"emaillabel":		 "Screenshot an folgende email senden",
+		"websitelabel": 	 "Website von der Screenshot erstellt wird",
 		"countrycode":       "de_DE",
 		"currencycode":      "EUR",
 		"currencysymbol":    "€",
-		"toScreenshot":      "Zum Screenshot",
+		"successText": 		 "email wird in kürze versendet",
+		"mailscreenshot":    "Screenshot zusenden",
 		"price":             "5.99"
 	}

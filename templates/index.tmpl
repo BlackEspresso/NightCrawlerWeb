@@ -19,18 +19,22 @@
     <div class="row">
         <h3>Screenshot Website</h3>
         <form id="formWebScreenshots">
+		<label>{{.websitelabel}}</label>
         <input name="url" class="u-full-width" type="text" placeholder="http://google.com">
+		<label>{{.emaillabel}}</label>
+		<input name="email" class="u-full-width" type="text" placeholder="yourmail@googlemail.com">
         <br>
         <div id="btnLoading" style="display:none;">
             <i class="fa fa-spinner fa-spin"></i>
         </div>
         <div id="errorText" style="display:none;"></div>
+		<div id="successText" style="display:none;">{{.successText}}</div>
         <a class="button button-primary" id="downloadLink" target="_blank" href="" style="display:none;">
-            {{.toScreenshot}}
+            {{.mailscreenshot}}
         </a>
         <br>
         <a class="button" id="btnScreenshot" value="Click">
-            <i class="fa fa-camera-retro"></i> Screenshot
+            <i class="fa fa-camera-retro"></i> {{.mailscreenshot}}
         </a>
         </form>
 	</div>
@@ -38,7 +42,8 @@
 
 <div class="container">
 <p>
-{{.needmoresnaphosts}} {{.gopro1}} {{.price}}{{.currencysymbol}}<br>
+{{.needmoresnaphosts}} <br>
+{{.gopro1}} {{.price}}{{.currencysymbol}}<br>
 {{.gopro2}}
 </p>
 
@@ -76,7 +81,7 @@ $(document).ready(function(){
 
 function screenshot(e){
 	e.preventDefault();
-	loadingButton(false)
+	//loadingButton(false)
 	
 	$.ajax({
         url: '/screenshot',
@@ -102,9 +107,10 @@ function loadingButton(hide){
 }
 
 function onScreenshotSuccess(obj){
-	loadingButton(true)
+	//loadingButton(true)
 	
-	$('#downloadLink').attr('href',obj.Link).show();
+	//$('#downloadLink').attr('href',obj.Link).show();
+	$('#successText').show();
 	$('#errorText').text('').hide();
 }
 
@@ -113,6 +119,7 @@ function onScreenshotError(data){
 	loadingButton(true)
 	$('#downloadLink').attr('href','').hide();
 	$('#errorText').text(errorText).show();
+	$('#successText').hide();
 }
 
 </script>
