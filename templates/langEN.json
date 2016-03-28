@@ -12,7 +12,7 @@
 		"currencycode":      "USD",
 		"currencysymbol":    "$",
 		"successText": 		 "sending email...",
-		"mailscreenshot":    "send screenshot",
+		"mailscreenshot":    "save website",
 		"price":             "5.99",
 		"option_image":		 "Image (JPEG)",
 		"option_document":   "Document (PDF)"

@@ -12,7 +12,7 @@
 		"currencycode":      "EUR",
 		"currencysymbol":    "€",
 		"successText": 		 "email wird versendet...",
-		"mailscreenshot":    "Screenshot zusenden",
+		"mailscreenshot":    "Webseite speichern",
 		"price":             "5.99",
 		"option_image":		 "Bild (JPEG)",
 		"option_document":   "Dokument (PDF)"
