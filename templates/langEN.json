@@ -6,11 +6,13 @@
 		"emailaddress":      "support@webscreenshot.ifempty.de",
 		"anyquestions":      "any questions? write us",
 		"emaillabel":		 "send screenshot to mail",
-		"websitelabel": 	 "website to screenshot",
+		"websitelabel": 	 "website",
 		"countrycode":       "en_US",
 		"currencycode":      "USD",
 		"currencysymbol":    "$",
 		"successText": 		 "sending mail...",
 		"mailscreenshot":    "send screenshot",
-		"price":             "5.99"
+		"price":             "5.99",
+		"option_image":		 "Image (JPEG)",
+		"option_document":   "Document (PDF)"
 	}

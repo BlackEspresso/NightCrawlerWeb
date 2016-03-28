@@ -31,9 +31,10 @@
         <input name="url" class="u-full-width" type="text" placeholder="http://google.com">
 		<label>{{.emaillabel}}</label>
 		<input name="email" class="u-full-width" type="text" placeholder="yourmail@googlemail.com">
+		<label>Format</label>
 		<select name="format">
-  			<option value="jpeg">Image (jpeg)</option>
-			<option value="pdf">Document (PDF)</option>
+  			<option value="jpeg">{{.option_image}}</option>
+			<option value="pdf">{{.option_document}}</option>
 		</select>
         <div id="btnLoading" style="display:none;">
             <i class="fa fa-spinner fa-spin"></i>
