@@ -10,7 +10,7 @@
 		"countrycode":       "de_DE",
 		"currencycode":      "EUR",
 		"currencysymbol":    "€",
-		"successText": 		 "email wird in kürze versendet",
+		"successText": 		 "email wird versendet...",
 		"mailscreenshot":    "Screenshot zusenden",
 		"price":             "5.99"
 	}

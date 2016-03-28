@@ -33,8 +33,15 @@ func getScreenshot(g *gin.Context) {
 	// build query
 	urlQuery := g.Query("url")
 	email := g.Query("email")
+	format := g.Query("format")
+
 	if urlQuery == "" {
 		res := ErrorResult{"url paramter is empty", 3}
+		g.JSON(403, res)
+		return
+	}
+	if format == "" && format != "pdf" && format != "jpeg" {
+		res := ErrorResult{"format paramter invalid", 4}
 		g.JSON(403, res)
 		return
 	}
@@ -42,6 +49,7 @@ func getScreenshot(g *gin.Context) {
 	q := apiurl.Query()
 	q.Set("url", urlQuery)
 	q.Set("email", email)
+	q.Set("format", format)
 	apiurl.RawQuery = q.Encode()
 
 	// query api
@@ -119,6 +127,7 @@ func screenshotPublic(g *gin.Context) {
 	email := g.Query("email")
 	if email == "" {
 		g.JSON(403, ErrorResult{"need url parameter", 4})
+		return
 	}
 
 	emailRequestCount, hasKey := usedEmails[email]

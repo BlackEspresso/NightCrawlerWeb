@@ -10,7 +10,7 @@
 		"countrycode":       "en_US",
 		"currencycode":      "USD",
 		"currencysymbol":    "$",
-		"successText": 		 "mail will be send shortyl",
+		"successText": 		 "sending mail...",
 		"mailscreenshot":    "send screenshot",
 		"price":             "5.99"
 	}

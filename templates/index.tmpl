@@ -12,6 +12,14 @@
     margin-top:20px;
     margin-bottom: 20px;
 }
+#errorText{
+	font-weight:bold;
+	color:red;
+}
+#successText{
+	font-weight:bold;
+	color:green;
+}
 </style>
 </head>
 <body>
@@ -23,7 +31,10 @@
         <input name="url" class="u-full-width" type="text" placeholder="http://google.com">
 		<label>{{.emaillabel}}</label>
 		<input name="email" class="u-full-width" type="text" placeholder="yourmail@googlemail.com">
-        <br>
+		<select name="format">
+  			<option value="jpeg">Image (jpeg)</option>
+			<option value="pdf">Document (PDF)</option>
+		</select>
         <div id="btnLoading" style="display:none;">
             <i class="fa fa-spinner fa-spin"></i>
         </div>
@@ -110,7 +121,7 @@ function onScreenshotSuccess(obj){
 	//loadingButton(true)
 	
 	//$('#downloadLink').attr('href',obj.Link).show();
-	$('#successText').show();
+	$('#successText').show().delay(4000).hide(200);
 	$('#errorText').text('').hide();
 }
 
@@ -118,7 +129,7 @@ function onScreenshotError(data){
 	var errorText = data.responseJSON.Error
 	loadingButton(true)
 	$('#downloadLink').attr('href','').hide();
-	$('#errorText').text(errorText).show();
+	$('#errorText').text(errorText).show().delay(4000).hide(200);
 	$('#successText').hide();
 }
 
