@@ -15,5 +15,6 @@
 		"mailscreenshot":    "Webseite speichern",
 		"price":             "5.99",
 		"option_image":		 "Bild (JPEG)",
-		"option_document":   "Dokument (PDF)"
+		"option_document":   "Dokument (PDF)",
+		"btnShowMore":		"Mehr"
 	}

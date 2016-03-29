@@ -42,8 +42,12 @@ func main() {
 	r.Static("/static", "./static")
 	r.GET("/screenshot", screenshotPublic)
 	r.GET("/", index)
-	r.GET("/de", indexDE)
-	r.GET("/en", indexEN)
+	r.GET("/de", index)
+	r.GET("/en", index)
+	r.GET("/de/screenshot", indexDE)
+	r.GET("/en/screenshot", indexEN)
+	r.GET("/de/more", moreDE)
+	r.GET("/en/more", moreEN)
 	r.GET("/users/:uid/screenshot", screenshotProfessional)
 
 	uname := appSettings.Additional["AdminUserName"]

@@ -20,20 +20,23 @@
 	font-weight:bold;
 	color:green;
 }
+body{
+	padding-top:20px;
+}
 </style>
 </head>
 <body>
-<div class="container" style="margin-top:20px;">
+<div class="container">
     <div class="row">
-        <h3>{{.title}}</h3>
+        <h3><i class="fa fa-save"></i> {{.title}}</h3>
 		<p>{{.subtitle}}</div>
         <form id="formWebScreenshots">
 			<label>{{.websitelabel}}</label>
-	        <input name="url" class="u-full-width" type="text" placeholder="http://google.com">
+	        <input name="url" class="u-full-width" type="url" placeholder="http://google.com" required>
 			<div class="row">
 			<div class="six columns">
 				<label>{{.emaillabel}}</label>
-				<input name="email" class="u-full-width" type="text" placeholder="yourmail@googlemail.com">
+				<input name="email" class="u-full-width" type="email" required placeholder="yourmail@googlemail.com">
 			</div>
 			<div class="six columns">
 				<label>Format</label>
@@ -53,65 +56,48 @@
 	            {{.mailscreenshot}}
 	        </a>
 	        <br>
-	        <a class="button" id="btnScreenshot" value="Click">
-	            <i class="fa fa-camera-retro"></i> {{.mailscreenshot}}
-	        </a>
-		
+			<input type="submit" class="button" value="{{.mailscreenshot}}">
+			</button>
+			
         </form>
+	
+	<p>
+		<a href="./more" id="showMore">
+			{{.btnShowMore}}
+		</a>
+	</p>
 	</div>
 </div>
-
-<div class="container">
-<p>
-{{.needmoresnaphosts}} <br>
-{{.gopro1}} {{.price}}{{.currencysymbol}}<br>
-{{.gopro2}}
-</p>
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_xclick-subscriptions">
-<input type="hidden" name="business" value="{{.emailaddress}}">
-<input type="hidden" name="lc" value="BM">
-<input type="hidden" name="item_name" value="WebScreenshot Professional">
-<input type="hidden" name="item_number" value="102">
-<input type="hidden" name="no_note" value="1">
-<input type="hidden" name="src" value="1">
-<input type="hidden" name="a3" value="{{.price}}">
-<input type="hidden" name="p3" value="1">
-<input type="hidden" name="t3" value="M">
-<input type="hidden" name="currency_code" value="{{.currencycode}}">
-<input type="hidden" name="bn" value="PP-SubscriptionsBF:btn_subscribeCC_LG.gif:NonHostedGuest">
-<input type="image" src="https://www.paypalobjects.com/{{.countrycode}}/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-
-
-<p>
-{{.anyquestions}} <a href="mailto:{{.emailaddress}}">{{.emailaddress}}</a>
-</p>
-</div>
-
 
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
 
 <script>
 $(document).ready(function(){
 	$('#formWebScreenshots').submit(screenshot);
-	$('#btnScreenshot').click(function(){$('#formWebScreenshots').submit();});
+	//$('#btnScreenshot').click(function(){$('#formWebScreenshots').submit();});
 })
 
+$.fn.isValid = function(){
+    return this[0].checkValidity()
+}
+
 function screenshot(e){
-	e.preventDefault();
 	//loadingButton(false)
+	e.preventDefault()
 	
-	$.ajax({
-        url: '/screenshot',
-        type: 'get',
-        dataType: 'json',
-        data: $('#formWebScreenshots').serialize(),
-        success: onScreenshotSuccess,
-		error:onScreenshotError
-    });
+	var form = $('#formWebScreenshots');
+	if (form.isValid()){
+		$.ajax({
+	        url: '/screenshot',
+	        type: 'get',
+	        dataType: 'json',
+	        data: form.serialize(),
+	        success: onScreenshotSuccess,
+			error:onScreenshotError
+	    });
+	}else{
+		form.find( ":invalid" ).first().focus();
+	}
 }
 
 function loadingButton(hide){

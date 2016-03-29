@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<title>{{.title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/normalize.css">
+<link rel="stylesheet" href="/static/css/skeleton.css">
+<style>
+body{
+	padding-top:20px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+ <h3><i class="fa fa-info"></i> More </h3>
+<p>
+{{.needmoresnaphosts}} <br>
+{{.gopro1}} {{.price}}{{.currencysymbol}}<br>
+{{.gopro2}}
+</p>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_xclick-subscriptions">
+<input type="hidden" name="business" value="{{.emailaddress}}">
+<input type="hidden" name="lc" value="BM">
+<input type="hidden" name="item_name" value="WebScreenshot Professional">
+<input type="hidden" name="item_number" value="102">
+<input type="hidden" name="no_note" value="1">
+<input type="hidden" name="src" value="1">
+<input type="hidden" name="a3" value="{{.price}}">
+<input type="hidden" name="p3" value="1">
+<input type="hidden" name="t3" value="M">
+<input type="hidden" name="currency_code" value="{{.currencycode}}">
+<input type="hidden" name="bn" value="PP-SubscriptionsBF:btn_subscribeCC_LG.gif:NonHostedGuest">
+<input type="image" src="https://www.paypalobjects.com/{{.countrycode}}/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
+<p>
+{{.anyquestions}} <a href="mailto:{{.emailaddress}}">{{.emailaddress}}</a>
+</p>
+</div>
+
+</body>
+</html>

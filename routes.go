@@ -21,9 +21,9 @@ func index(g *gin.Context) {
 	lang = strings.Split(lang, ";")[0]
 	log.Println(lang)
 	if strings.HasPrefix(lang, "de") {
-		g.Redirect(302, "/de")
+		g.Redirect(302, "/de/screenshot")
 	} else {
-		g.Redirect(302, "/en")
+		g.Redirect(302, "/en/screenshot")
 	}
 }
 
@@ -164,6 +164,16 @@ func getLang(key string) map[string]string {
 		log.Fatal(err)
 	}
 	return ret
+}
+
+func moreEN(g *gin.Context) {
+	lang := getLang("EN")
+	g.HTML(200, "more.tmpl", lang)
+}
+
+func moreDE(g *gin.Context) {
+	lang := getLang("DE")
+	g.HTML(200, "more.tmpl", lang)
 }
 
 func indexDE(g *gin.Context) {
