@@ -12,18 +12,32 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type ScreenshotResult struct {
+	Link        string
+	DurationSec float64
+}
+
+type ErrorResult struct {
+	Error     string
+	ErrorCode int
+}
+
 func adminInfo(g *gin.Context) {
 
 }
 
-func index(g *gin.Context) {
+func getLangFromRequest(g *gin.Context) string {
 	lang := g.Request.Header.Get("Accept-Language")
 	lang = strings.Split(lang, ";")[0]
-	log.Println(lang)
+	return lang
+}
+
+func index(g *gin.Context) {
+	lang := getLangFromRequest(g)
 	if strings.HasPrefix(lang, "de") {
-		g.Redirect(302, "/de/screenshot")
+		g.Redirect(302, "/pages/de/screenshot")
 	} else {
-		g.Redirect(302, "/en/screenshot")
+		g.Redirect(302, "/pages/en/screenshot")
 	}
 }
 
@@ -80,16 +94,6 @@ func handleApiError(g *gin.Context, err error, eCode int) {
 	log.Println(err)
 	g.JSON(403, errRes)
 	return
-}
-
-type ScreenshotResult struct {
-	Link        string
-	DurationSec float64
-}
-
-type ErrorResult struct {
-	Error     string
-	ErrorCode int
 }
 
 func screenshotProfessional(g *gin.Context) {
@@ -154,34 +158,25 @@ func screenshotPublic(g *gin.Context) {
 }
 
 func getLang(key string) map[string]string {
-	cRaw, err := ioutil.ReadFile("./templates/lang" + key + ".json")
+	key = strings.ToLower(key)
+	if key != "de" || key != "en" {
+		key = "en"
+	}
+	cRaw, err := ioutil.ReadFile("./lang/lang.json")
 	if err != nil {
 		log.Fatal(err)
 	}
-	ret := map[string]string{}
+	ret := map[string]map[string]string{}
 	err = json.Unmarshal(cRaw, &ret)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return ret
+	return ret[key]
 }
 
-func moreEN(g *gin.Context) {
-	lang := getLang("EN")
-	g.HTML(200, "more.tmpl", lang)
-}
-
-func moreDE(g *gin.Context) {
-	lang := getLang("DE")
-	g.HTML(200, "more.tmpl", lang)
-}
-
-func indexDE(g *gin.Context) {
-	lang := getLang("DE")
-	g.HTML(200, "index.tmpl", lang)
-}
-
-func indexEN(g *gin.Context) {
-	lang := getLang("EN")
-	g.HTML(200, "index.tmpl", lang)
+func Pages(g *gin.Context) {
+	lang := getLang(g.Param("lang"))
+	page := g.Param("page")
+	page = strings.ToLower(page)
+	g.HTML(200, page+".tmpl", lang)
 }

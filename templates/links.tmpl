@@ -1,0 +1,136 @@
+<html>
+
+<head>
+<title>{{.title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/normalize.css">
+<link rel="stylesheet" href="/static/css/skeleton.css">
+<style type="text/css">
+#downloadLink{
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+#errorText{
+	font-weight:bold;
+	color:red;
+}
+#successText{
+	font-weight:bold;
+	color:green;
+}
+body{
+	padding-top:20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h3><i class="fa fa-save"></i> {{.linksTitle}}</h3>
+		<p>{{.subtitle}}</div>
+        <form id="formWebScreenshots">
+			<label>{{.websitelabel}}</label>
+	        <input name="url" class="u-full-width" type="url" placeholder="http://google.com" required>
+			<div class="row">
+			<div class="six columns">
+				<label>{{.emaillabel}}</label>
+				<input name="email" class="u-full-width" type="email" required placeholder="yourmail@googlemail.com">
+			</div>
+			<div class="six columns">
+				<label>Format</label>
+				<select name="format">
+		  			<option value="jpeg">{{.option_image}}</option>
+					<option value="pdf">{{.option_document}}</option>
+				</select>
+			</div>
+			</div>
+			
+			<div id="btnLoading" style="display:none;">
+		            <i class="fa fa-spinner fa-spin"></i>
+		        </div>
+	        <div id="errorText" style="display:none;"></div>
+			<div id="successText" style="display:none;">{{.successText}}</div>
+	        <a class="button button-primary" id="downloadLink" target="_blank" href="" style="display:none;">
+	            {{.mailscreenshot}}
+	        </a>
+	        <br>
+			<input type="submit" class="button" value="{{.mailscreenshot}}">
+			</button>
+			
+        </form>
+	
+	<p>
+		<a href="./more" id="showMore">
+			{{.btnShowMore}}
+		</a>
+	</p>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"
+	integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="
+	crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+	$('#formWebScreenshots').submit(screenshot);
+	//$('#btnScreenshot').click(function(){$('#formWebScreenshots').submit();});
+})
+
+$.fn.isValid = function(){
+    return this[0].checkValidity()
+}
+
+function screenshot(e){
+	//loadingButton(false)
+	e.preventDefault()
+	
+	var form = $('#formWebScreenshots');
+	if (form.isValid()){
+		$.ajax({
+	        url: '/screenshot',
+	        type: 'get',
+	        dataType: 'json',
+	        data: form.serialize(),
+	        success: onScreenshotSuccess,
+			error:onScreenshotError
+	    });
+	}else{
+		form.find( ":invalid" ).first().focus();
+	}
+}
+
+function loadingButton(hide){
+	$('#downloadLink').hide();
+	$('#errorText').hide();
+	
+	if(hide){
+		$('#btnScreenshot').show();
+		$('#btnLoading').hide();
+	}else{
+		$('#btnScreenshot').hide();
+		$('#btnLoading').show();
+	}
+}
+
+function onScreenshotSuccess(obj){
+	//loadingButton(true)
+	
+	//$('#downloadLink').attr('href',obj.Link).show();
+	$('#successText').show().delay(4000).hide(200);
+	$('#errorText').text('').hide();
+}
+
+function onScreenshotError(data){
+	var errorText = data.responseJSON.Error
+	loadingButton(true)
+	$('#downloadLink').attr('href','').hide();
+	$('#errorText').text(errorText).show().delay(4000).hide(200);
+	$('#successText').hide();
+}
+
+</script>
+</body>
+</html>
