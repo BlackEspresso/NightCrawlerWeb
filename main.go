@@ -7,6 +7,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/BlackEspresso/crawlbase"
 	"github.com/gin-gonic/gin"
 	"github.com/satori/go.uuid"
 )
@@ -41,6 +42,7 @@ func main() {
 
 	r.Static("/static", "./static")
 	r.GET("/screenshot", screenshotPublic)
+	r.GET("/siteinfo", siteinfo)
 	r.GET("/users/:uid/screenshot", screenshotProfessional)
 	r.GET("/", index)
 	r.GET("/de", index)
@@ -64,6 +66,17 @@ func newUser() *UserInfo {
 	u.ResetDuration = time.Duration(5*24) * time.Hour
 	u.NextReset = time.Now().Add(u.ResetDuration)
 	return &u
+}
+
+func siteinfo(g *gin.Context) {
+	reqUrl := g.Query("url")
+	cw := crawlbase.NewCrawler()
+	page, err := cw.GetPage(reqUrl, "GET")
+	if err != nil {
+		g.String(403, err.Error())
+		return
+	}
+	g.JSON(200, page)
 }
 
 func loadUsers() map[string]*UserInfo {

@@ -17,7 +17,8 @@
 		"price":             "5.99",
 		"option_image":		 "Bild (JPEG)",
 		"option_document":   "Dokument (PDF)",
-		"btnShowMore":		 "Mehr"
+		"btnShowMore":		 "Mehr",
+		"getlinks":		"Links anzeigen"
 },
 "en":{
 		"title":             "Save website as ...",
@@ -37,7 +38,8 @@
 		"price":             "5.99",
 		"option_image":		 "Image (JPEG)",
 		"option_document":   "Document (PDF)",
-		"btnShowMore":		"Mehr"
+		"btnShowMore":		"More",
+		"getlinks":"Get Links"
 }
 
 }
