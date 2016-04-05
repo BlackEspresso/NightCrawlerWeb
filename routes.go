@@ -159,7 +159,7 @@ func screenshotPublic(g *gin.Context) {
 
 func getLang(key string) map[string]string {
 	key = strings.ToLower(key)
-	if key != "de" || key != "en" {
+	if key != "de" && key != "en" {
 		key = "en"
 	}
 	cRaw, err := ioutil.ReadFile("./lang/lang.json")

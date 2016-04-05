@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/BlackEspresso/crawlbase"
@@ -71,6 +72,9 @@ func newUser() *UserInfo {
 func siteinfo(g *gin.Context) {
 	reqUrl := g.Query("url")
 	cw := crawlbase.NewCrawler()
+	cw.Client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		return nil
+	}
 	page, err := cw.GetPage(reqUrl, "GET")
 	if err != nil {
 		g.String(403, err.Error())

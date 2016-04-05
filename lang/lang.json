@@ -18,7 +18,9 @@
 		"option_image":		 "Bild (JPEG)",
 		"option_document":   "Dokument (PDF)",
 		"btnShowMore":		 "Mehr",
-		"getlinks":		"Links anzeigen"
+		"getlinks":		"Links anzeigen",
+		"findLinksTitle":   "Links finden",
+		"findLinksSubtext":"Alle Links einer Website anzeigen"
 },
 "en":{
 		"title":             "Save website as ...",
@@ -39,7 +41,7 @@
 		"option_image":		 "Image (JPEG)",
 		"option_document":   "Document (PDF)",
 		"btnShowMore":		"More",
-		"getlinks":"Get Links"
+		"getlinks":"Show Links"
 }
 
 }
