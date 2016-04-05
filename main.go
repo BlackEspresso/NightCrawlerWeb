@@ -46,8 +46,6 @@ func main() {
 	r.GET("/siteinfo", siteinfo)
 	r.GET("/users/:uid/screenshot", screenshotProfessional)
 	r.GET("/", index)
-	r.GET("/de", index)
-	r.GET("/en", index)
 	r.GET("/pages/:lang/:page", Pages)
 
 	uname := appSettings.Additional["AdminUserName"]
