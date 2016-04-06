@@ -23,6 +23,9 @@
 body{
 	padding-top:20px;
 }
+table a {
+	color:black;
+}
 </style>
 </head>
 <body>
@@ -45,14 +48,19 @@ body{
 			{{.btnShowMore}}
 		</a>
         </form>
-		<div id="foundLinks">
-		</div>
+		<a download='somedata.xls' id="btnExportToExcel" style="display:none;"
+			class="u-pull-right" href='#' onclick="return ExcellentExport.excel(this, 'tableLinks', 'Links')">
+			Export to Excel
+		</a>
+		<table id="tableLinks" class="u-pull-left">
+		</table>
 		
 		<p>
 		<br>
 	</p>
 	</div>
 </div>
+<script src="/static/excellentexport.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-2.2.2.min.js"
 	integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="
@@ -92,9 +100,11 @@ function loadingButton(hide){
 	if(hide){
 		$('#btnScreenshot').show();
 		$('#btnLoading').hide();
+		$('#btnExportToExcel').show();
 	}else{
 		$('#btnScreenshot').hide();
 		$('#btnLoading').show();
+		$('#btnExportToExcel').hide();
 	}
 }
 
@@ -102,15 +112,25 @@ function onSubmitSuccess(obj){
 	loadingButton(true)
 	$('#successText').show().delay(4000).hide(200);
 	$('#errorText').text('').hide();
-	var ls = $('#foundLinks');
-	var hrefs = obj.RespInfo.Hrefs;
+	var ls = $('#tableLinks');
 	ls.empty()
+	var hrefs = obj.RespInfo.Hrefs;
+	if (hrefs==null){
+		return;
+	}
+	
+	hrefs.sort();
+	var header = $('<tr>')
+		.append($('<th>').text('Links from '));
+	
+	ls.append(header)
 	for(var x =0;x<hrefs.length;x++){
 		var newLink = $('<a>').attr('href',hrefs[x])
 					.text(hrefs[x])
-					.attr('target','_blank')
-		ls.append(newLink);
-		ls.append($('<br>'))
+					.attr('target','_blank');
+					
+		var row = $('<tr>').append($('<td>').append(newLink));
+		ls.append(row);
 	}
 }
 
