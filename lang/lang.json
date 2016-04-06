@@ -21,7 +21,7 @@
 		"btnShowMore":		 "Mehr",
 		"getlinks":		"Links anzeigen",
 		"findLinksTitle":   "Links finden",
-		"findLinksSubtext":"Findet alle Links auf einer Website und zeigt diese an.",
+		"findLinksSubtext":"Findet alle Links auf einer Website.",
 		"errTooManyRequestsFromIP":"Zu viele Anfragen. Bitte warten Sie 3 h oder kaufen Sie die Pro Version.",
 		"pageLinks_url":"/pages/de/links",
 		"pageLinks_title": "Links finden",
