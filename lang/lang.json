@@ -1,12 +1,12 @@
 {
 "de":{
-		"title":             "Webseite speichern als ...",
+		"title":             "Webseite Screenshot",
 		"needmoresnaphosts": "Benötigen Sie mehr Anfragen pro Stunde oder wollen Sie die Erstellung automatisieren (API)?",
 		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
 		"gopro2":            "4000 Requests pro Monat",
 		"gopro3":			 "Jederzeit kündbar über ihr PayPal Konto!",
 		"anyquestions":      "Benötigen Sie mehr Details oder haben Sie noch Fragen? Schreiben Sie uns!",
-		"subtitle":			 "Webseite speichern als Bild/PDF und an Email senden",
+		"subtitle":			 "Webseite als Bild/PDF speichern und an Email senden",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
 		"emaillabel":		 "an folgende Email senden",
 		"websitelabel": 	 "Webseite",
@@ -21,8 +21,14 @@
 		"btnShowMore":		 "Mehr",
 		"getlinks":		"Links anzeigen",
 		"findLinksTitle":   "Links finden",
-		"findLinksSubtext":"Alle Links einer Website anzeigen",
-		"errTooManyRequestsFromIP":"Zu viele Anfragen. Bitte warten Sie 3 h oder kaufen Sie die Pro Version."
+		"findLinksSubtext":"Findet alle Links auf einer Website und zeigt diese an.",
+		"errTooManyRequestsFromIP":"Zu viele Anfragen. Bitte warten Sie 3 h oder kaufen Sie die Pro Version.",
+		"pageLinks_url":"/pages/de/links",
+		"pageLinks_title": "Links finden",
+		"pageScreenshot_url":"/pages/de/screenshot",
+		"pageScreenshot_title": "Webseite Screenshot",
+		"description":"Beschreibung",
+		"linksFrom":"Links von"
 },
 "en":{
 		"title":             "Save website as ...",

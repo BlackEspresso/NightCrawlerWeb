@@ -20,19 +20,28 @@
 	font-weight:bold;
 	color:green;
 }
-body{
-	padding-top:20px;
-}
 table a {
 	color:black;
 }
+.mainview{
+	padding-top:20px;
+}
+nav a{
+	margin-left:15px;
+	color:gray;
+}
+
 </style>
 </head>
 <body>
-<div class="container">
+<nav class="container">
+	Menu:
+	<a href="{{.pageLinks_url}}">{{.pageLinks_title}}</a>
+	<a href="{{.pageScreenshot_url}}" class="active">{{.pageScreenshot_title}}</a>
+</nav>
+<div class="container mainview">
     <div class="row">
         <h3><i class="fa fa-link"></i> {{.findLinksTitle}}</h3>
-		<p>{{.findLinksSubtext}}</div>
         <form id="formSiteInfo" style="overflow:auto;">
 			<label>{{.websitelabel}}</label>
 	        <input name="url" class="u-full-width" type="url" placeholder="http://google.com" required>
@@ -46,18 +55,15 @@ table a {
 		    </div>
 			<a href="./more" class="u-pull-right" id="showMore">
 			{{.btnShowMore}}
-		</a>
+			</a>
         </form>
+		<p><strong>{{.description}}</strong>: {{.findLinksSubtext}}</p>
 		<a download='somedata.xls' id="btnExportToExcel" style="display:none;"
 			class="u-pull-right" href='#' onclick="return ExcellentExport.excel(this, 'tableLinks', 'Links')">
 			Export to Excel
 		</a>
 		<table id="tableLinks" class="u-pull-left">
 		</table>
-		
-		<p>
-		<br>
-	</p>
 	</div>
 </div>
 <script src="/static/excellentexport.min.js"></script>
@@ -67,6 +73,10 @@ table a {
 	crossorigin="anonymous"></script>
 
 <script>
+var textLinkFrom = "{{.linksFrom}}"
+var errorTextTooManyRequests ="{{.errorTooManyRequests}}"
+
+
 $(document).ready(function(){
 	$('#formSiteInfo').submit(getSiteInfo);
 })
@@ -121,7 +131,7 @@ function onSubmitSuccess(obj){
 	
 	hrefs.sort();
 	var header = $('<tr>')
-		.append($('<th>').text('Links from '));
+		.append($('<th>').text(textLinkFrom + ' '+obj.URL));
 	
 	ls.append(header)
 	for(var x =0;x<hrefs.length;x++){

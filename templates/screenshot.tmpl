@@ -20,13 +20,22 @@
 	font-weight:bold;
 	color:green;
 }
-body{
+.mainview{
 	padding-top:20px;
+}
+nav a{
+	margin-left:15px;
+	color:gray;
 }
 </style>
 </head>
 <body>
-<div class="container">
+<nav class="container">
+	Menu:
+	<a href="{{.pageLinks_url}}">{{.pageLinks_title}}</a>
+	<a href="{{.pageScreenshot_url}}" class="active">{{.pageScreenshot_title}}</a>
+</nav>
+<div class="container mainview">
     <div class="row">
         <h3><i class="fa fa-save"></i> {{.title}}</h3>
 		<p>{{.subtitle}}</div>
@@ -58,14 +67,11 @@ body{
 	        <br>
 			<input type="submit" class="button" value="{{.mailscreenshot}}">
 			</button>
-			
+			<a href="./more" class="u-pull-right" id="showMore">
+			{{.btnShowMore}}
+			</a>
         </form>
 	
-	<p>
-		<a href="./more" id="showMore">
-			{{.btnShowMore}}
-		</a>
-	</p>
 	</div>
 </div>
 
