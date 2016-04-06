@@ -1,10 +1,11 @@
 {
 "de":{
 		"title":             "Webseite speichern als ...",
-		"needmoresnaphosts": "Benötigen Sie mehr Screenshots oder wollen Sie die Erstellung automatisieren?",
+		"needmoresnaphosts": "Benötigen Sie mehr Anfragen pro Stunde oder wollen Sie die Erstellung automatisieren (API)?",
 		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
-		"gopro2":            "1000 Screenshots pro Monat & nahezu unbegrenztes teilen der Links.",
-		"anyquestions":      "noch Fragen? schreiben Sie uns",
+		"gopro2":            "4000 Requests pro Monat",
+		"gopro3":			 "Jederzeit kündbar über ihr PayPal Konto!",
+		"anyquestions":      "Benötigen Sie mehr Details oder haben Sie noch Fragen? Schreiben Sie uns!",
 		"subtitle":			 "Webseite speichern als Bild/PDF und an Email senden",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
 		"emaillabel":		 "an folgende Email senden",
