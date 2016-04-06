@@ -20,7 +20,8 @@
 		"btnShowMore":		 "Mehr",
 		"getlinks":		"Links anzeigen",
 		"findLinksTitle":   "Links finden",
-		"findLinksSubtext":"Alle Links einer Website anzeigen"
+		"findLinksSubtext":"Alle Links einer Website anzeigen",
+		"errTooManyRequestsFromIP":"Zu viele Anfragen. Bitte warten Sie 3 h oder kaufen Sie die Pro Version."
 },
 "en":{
 		"title":             "Save website as ...",
@@ -41,7 +42,8 @@
 		"option_image":		 "Image (JPEG)",
 		"option_document":   "Document (PDF)",
 		"btnShowMore":		"More",
-		"getlinks":"Show Links"
+		"getlinks":"Show Links",
+		"errTooManyRequestsFromIP":"Too many requests. Please wait 3 h or go pro."
 }
 
 }

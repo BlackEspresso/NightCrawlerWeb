@@ -96,7 +96,7 @@ func handleApiError(g *gin.Context, err error, eCode int) {
 	return
 }
 
-func screenshotProfessional(g *gin.Context) {
+func apiScreenshotProfessional(g *gin.Context) {
 	uid := g.Param("uid")
 	user, ok := profUsers[uid]
 	if !ok {
@@ -121,12 +121,17 @@ func screenshotProfessional(g *gin.Context) {
 	getScreenshot(g)
 }
 
-func screenshotPublic(g *gin.Context) {
+func getClientRequestCount(g *gin.Context) int {
 	clientRequestCount, hasKey := ips[g.ClientIP()]
 	if !hasKey {
 		ips[g.ClientIP()] = 0
 	}
 	ips[g.ClientIP()] += 1
+	return clientRequestCount
+}
+
+func apiScreenshotPublic(g *gin.Context) {
+	clientRequestCount := getClientRequestCount(g)
 
 	email := g.Query("email")
 	if email == "" {
@@ -140,7 +145,7 @@ func screenshotPublic(g *gin.Context) {
 	}
 	usedEmails[email] += 1
 
-	//reset ip restriction after 1h
+	//reset ip restriction after 3 hours
 	if time.Now().Sub(lastFree).Hours() > 3 {
 		lastFree = time.Now()
 		ips = map[string]int{}
@@ -148,7 +153,7 @@ func screenshotPublic(g *gin.Context) {
 	}
 
 	// restrict client to 10 requests per hour
-	if clientRequestCount > 10 || emailRequestCount > 10 {
+	if clientRequestCount > 4 || emailRequestCount > 4 {
 		res := ErrorResult{"too many requests from ip or to email, please wait", 11}
 		g.JSON(403, res)
 		return

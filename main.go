@@ -42,9 +42,9 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 
 	r.Static("/static", "./static")
-	r.GET("/screenshot", screenshotPublic)
-	r.GET("/siteinfo", siteinfo)
-	r.GET("/users/:uid/screenshot", screenshotProfessional)
+	r.GET("/screenshot", apiScreenshotPublic)
+	r.GET("/siteinfo", apiSiteInfoPublic)
+	r.GET("/users/:uid/screenshot", apiScreenshotProfessional)
 	r.GET("/", index)
 	r.GET("/pages/:lang/:page", Pages)
 
@@ -65,6 +65,18 @@ func newUser() *UserInfo {
 	u.ResetDuration = time.Duration(5*24) * time.Hour
 	u.NextReset = time.Now().Add(u.ResetDuration)
 	return &u
+}
+
+func apiSiteInfoPublic(g *gin.Context) {
+	clientRequestCount := getClientRequestCount(g)
+
+	if clientRequestCount > 4 {
+		res := ErrorResult{"too many request. please wait or buy pro.", 11}
+		g.JSON(403, res)
+		return
+	}
+
+	siteinfo(g)
 }
 
 func siteinfo(g *gin.Context) {
