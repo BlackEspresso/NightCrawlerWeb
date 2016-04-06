@@ -18,7 +18,6 @@
 		"price":             "5.99",
 		"option_image":		 "Bild (JPEG)",
 		"option_document":   "Dokument (PDF)",
-		"btnShowMore":		 "Mehr",
 		"getlinks":		"Links anzeigen",
 		"findLinksTitle":   "Links finden",
 		"findLinksSubtext":"Findet alle Links auf einer Website.",
@@ -27,7 +26,8 @@
 		"pageLinks_title": "Links finden",
 		"pageScreenshot_url":"/pages/de/screenshot",
 		"pageScreenshot_title": "Webseite Screenshot",
-		"description":"Beschreibung",
+		"pageMore_url":"/pages/de/more",
+		"pageMore_title": "Mehr",
 		"linksFrom":"Links von"
 },
 "en":{

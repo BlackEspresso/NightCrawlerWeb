@@ -27,6 +27,9 @@ nav a{
 	margin-left:15px;
 	color:gray;
 }
+h3{
+	margin-bottom:3px;
+}
 </style>
 </head>
 <body>
@@ -34,6 +37,7 @@ nav a{
 	Menu:
 	<a href="{{.pageLinks_url}}">{{.pageLinks_title}}</a>
 	<a href="{{.pageScreenshot_url}}" class="active">{{.pageScreenshot_title}}</a>
+	<a href="{{.pageMore_url}}" class="active">{{.pageMore_title}}</a>
 </nav>
 <div class="container mainview">
     <div class="row">
@@ -67,9 +71,6 @@ nav a{
 	        <br>
 			<input type="submit" class="button" value="{{.mailscreenshot}}">
 			</button>
-			<a href="./more" class="u-pull-right" id="showMore">
-			{{.btnShowMore}}
-			</a>
         </form>
 	
 	</div>
