@@ -1,3 +1,11 @@
 NightCrawlerWeb
 professionalusers.json
 settings.json
+phantomjs
+*.log
+*.zip
+*.png
+*.pdf
+*.jpeg
+awsenv.sh
+awsenv.bat

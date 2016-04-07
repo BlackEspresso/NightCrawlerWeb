@@ -6,16 +6,22 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/BlackEspresso/crawlbase"
+
 	"github.com/gin-gonic/gin"
 	"github.com/satori/go.uuid"
 )
 
 type Settings struct {
-	Listening  string
-	Additional map[string]string
+	Listening    string
+	Additional   map[string]string
+	PhantomPath  string
+	MailSettings map[string]string
+	S3Buckets    map[string]string
+	SMTPPassword string
 }
 
 type UserInfo struct {
@@ -26,11 +32,23 @@ type UserInfo struct {
 	ResetDuration time.Duration
 }
 
+type TaskElement struct {
+	Id         uuid.UUID
+	Func       func(*TaskElement)
+	Message    string
+	Success    bool
+	Param1     string
+	Param2     string
+	Param3     string
+	Additional []interface{}
+	ErrorCode  int
+}
+
 var appSettings Settings = Settings{}
 var ips map[string]int = map[string]int{}
 var usedEmails map[string]int = map[string]int{}
 var lastFree time.Time = time.Now()
-
+var tasks chan *TaskElement = make(chan *TaskElement, 200)
 var accounts gin.Accounts = gin.Accounts{}
 var profUsers map[string]*UserInfo = map[string]*UserInfo{}
 
@@ -38,15 +56,34 @@ func main() {
 	appSettings = loadSettings()
 	profUsers = loadUsers()
 
+	appSettings.PhantomPath = "./"
+	appSettings.S3Buckets = map[string]string{
+		"Screenshots": "nightcrawlerlinks",
+	}
+	env := os.Getenv("mailgunpassword")
+	appSettings.SMTPPassword = env
+
+	go runQueue()
+
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 
 	r.Static("/static", "./static")
+	r.GET("/", index)
 	r.GET("/screenshot", apiScreenshotPublic)
 	r.GET("/siteinfo", apiSiteInfoPublic)
 	r.GET("/users/:uid/screenshot", apiScreenshotProfessional)
-	r.GET("/", index)
 	r.GET("/pages/:lang/:page", Pages)
+
+	r.GET("crawl/siteinfo", siteinfo)
+	r.GET("crawld/screenshot", queueScreenshot)
+	r.GET("crawld/siteinfo", siteinfodyn)
+	r.GET("crawld/bucketinfo", bucketinfo)
+	r.GET("crawld/pageload", siteinfodyn)
+	r.GET("crawl/task/add", crawltask)
+	r.GET("crawl/task/info", crawltask)
+	r.GET("crawl/task/stop", crawltask)
+	r.GET("crawl/task/delete", crawltask)
 
 	uname := appSettings.Additional["AdminUserName"]
 	pass := appSettings.Additional["AdminPassword"]
