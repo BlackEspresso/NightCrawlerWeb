@@ -59,7 +59,9 @@ func getScreenshot(g *gin.Context) {
 		g.JSON(403, res)
 		return
 	}
-	apiurl, _ := url.Parse("http://localhost:8076/crawld/screenshot")
+	// todo call queue directly
+	port := appSettings.Listening
+	apiurl, _ := url.Parse("http://localhost" + port + "/crawld/screenshot")
 	q := apiurl.Query()
 	q.Set("url", urlQuery)
 	q.Set("email", email)
