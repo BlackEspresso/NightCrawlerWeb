@@ -60,8 +60,9 @@ func main() {
 	appSettings.S3Buckets = map[string]string{
 		"Screenshots": "nightcrawlerlinks",
 	}
-	env := os.Getenv("mailgunpassword")
+	env := os.Getenv("MAILGUN_PASSWORD")
 	appSettings.SMTPPassword = env
+	log.Println(appSettings.SMTPPassword)
 
 	go runQueue()
 
