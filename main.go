@@ -121,13 +121,17 @@ func apiDnsScanPublic(g *gin.Context) {
 
 func scanDNSMail(reqUrl, mail string) {
 	res := scanDNS(reqUrl)
-	data, err := json.Marshal(res)
-	if err != nil {
-		log.Println(err)
-		return
+	text := ""
+	for name, _ := range res {
+		text += name + ":\n"
+		for _, entry := range res[name] {
+			text += entry + "\n"
+		}
 	}
+
+	text += "name:\n"
 	fname := uuid.NewV4().String() + ".txt"
-	ioutil.WriteFile(fname, data, 0655)
+	ioutil.WriteFile(fname, []byte(text), 0655)
 	sendmail(mail, "scan dns for "+reqUrl, "results attached", fname)
 	os.Remove(fname)
 }
