@@ -57,6 +57,8 @@ h3{
   				<option value="top1000" disabled>Top 1000 (Nur Professional)</option>
   				<option value="ownList" disabled>Eigene Liste (Nur Professional)</option>
 			</select>
+			<label>Ergenis an Email senden (optional):</label>
+			<input name="email" type="email" placeholder="test@googlemail.com"/>
 			<div style="overflow:none;">
 			<div id="errorText" style="display:none;"></div>
 			<div id="successText" style="display:none;">{{.isCrawling}}</div>
@@ -135,6 +137,10 @@ function onSubmitSuccess(obj){
 	var hrefs = obj;
 	if (hrefs==null){
 		return;
+	}
+	if (hrefs=="ok"){
+		ls.append("email versendet")
+		return
 	}
 
 	var header = $('<tr>')

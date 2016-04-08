@@ -108,17 +108,41 @@ func newUser() *UserInfo {
 
 func apiDnsScanPublic(g *gin.Context) {
 	reqUrl := g.Query("url")
+	email := g.Query("email")
+
+	if email != "" {
+		go scanDNSMail(reqUrl, email)
+		g.JSON(200, "ok")
+	} else {
+		res := scanDNS(reqUrl)
+		g.JSON(200, res)
+	}
+}
+
+func scanDNSMail(reqUrl, mail string) {
+	res := scanDNS(reqUrl)
+	data, err := json.Marshal(res)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fname := uuid.NewV4().String() + ".txt"
+	ioutil.WriteFile(fname, data, 0655)
+	sendmail(mail, "scan dns for "+reqUrl, "results attached", fname)
+	os.Remove(fname)
+}
+
+func scanDNS(reqUrl string) map[string][]string {
 	data, err := ioutil.ReadFile("./static/top30Subdomains.txt")
 	if err != nil {
-		g.JSON(500, "")
+		log.Println(err)
+		return nil
 	}
 	ds := new(crawlbase.DNSScanner)
 	ds.LoadConfigFromFile("./resolv.conf")
-
 	lines := splitByLine(string(data))
-
 	res := ds.ScanDNS(lines, reqUrl)
-	g.JSON(200, res)
+	return res
 }
 
 func splitByLine(text string) []string {
