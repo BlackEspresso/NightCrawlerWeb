@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/BlackEspresso/crawlbase"
@@ -72,6 +73,7 @@ func main() {
 	r.GET("/", index)
 	r.GET("/screenshot", apiScreenshotPublic)
 	r.GET("/siteinfo", apiSiteInfoPublic)
+	r.GET("/dnsscan", apiDnsScanPublic)
 	r.GET("/users/:uid/screenshot", apiScreenshotProfessional)
 	r.GET("/pages/:lang/:page", Pages)
 
@@ -102,6 +104,17 @@ func newUser() *UserInfo {
 	u.ResetDuration = time.Duration(5*24) * time.Hour
 	u.NextReset = time.Now().Add(u.ResetDuration)
 	return &u
+}
+
+func apiDnsScanPublic(g *gin.Context) {
+	reqUrl := g.Query("url")
+	data, err := ioutil.ReadFile("./static/top30Subdomains.txt")
+	if err != nil {
+		g.JSON(500, "")
+	}
+	lines := strings.Split(string(data), "\n")
+	res := crawlbase.ScanDNS(lines, reqUrl)
+	g.JSON(200, res)
 }
 
 func apiSiteInfoPublic(g *gin.Context) {

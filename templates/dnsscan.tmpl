@@ -38,32 +38,39 @@ h3{
 <body>
 <nav class="container">
 	Menu:
-		<a href="{{.pageDnsScan_url}}" class="active">{{.pageDnsScan_title}}</a>
+	<a href="{{.pageDnsScan_url}}" class="active">{{.pageDnsScan_title}}</a>
 	<a href="{{.pageLinks_url}}">{{.pageLinks_title}}</a>
 	<a href="{{.pageScreenshot_url}}" class="active">{{.pageScreenshot_title}}</a>
 	<a href="{{.pageMore_url}}" class="active">{{.pageMore_title}}</a>
 </nav>
 <div class="container mainview">
     <div class="row">
-        <h3><i class="fa fa-link"></i> {{.pageLinks_title}}</h3>
-		<p>{{.findLinksSubtext}}</p>
-        <form id="formSiteInfo" style="overflow:auto;">
-			<label>{{.websitelabel}}</label>
-	        <input name="url" class="u-full-width" type="url" placeholder="http://google.com" required>
-			
-	        <div id="errorText" style="display:none;"></div>
+        <h3><i class="fa fa-link"></i> {{.pageDnsScan_title}}</h3>
+		<p>{{.dnsscan_subtitle}}</p>
+        <form id="formSiteInfo" style="overflow:none;">
+			<label>{{.domainLabel}}</label>
+	        <input name="url" class="u-full-width" type="text" placeholder="google.com" required/>
+			<label>Subdomains Liste</label>
+			<select name="scanlist">
+  				<option value="top30">Top 30</option>
+				<option value="top100" disabled>Top 100 (Nur Professional)</option>
+  				<option value="top1000" disabled>Top 1000 (Nur Professional)</option>
+  				<option value="ownList" disabled>Eigene Liste (Nur Professional)</option>
+			</select>
+			<div style="overflow:none;">
+			<div id="errorText" style="display:none;"></div>
 			<div id="successText" style="display:none;">{{.isCrawling}}</div>
-			<input type="submit" class="button u-pull-left" value="{{.getlinks}}">
-			</input>
+			<input type="submit" class="button u-pull-left" value="{{.scan}}" />
+			<div>
 			<div id="btnLoading" class="u-pull-left" style="margin-left:5px;display:none;">
 		            <i class="fa fa-spinner fa-spin" style="line-height:35px;"></i>
 		    </div>
         </form>
-		<a download='findlinks.xls' id="btnExportToExcel" style="display:none;"
+		<a download='dnsscan.xls' id="btnExportToExcel" style="display:none;"
 			class="u-pull-right" href='#' onclick="return ExcellentExport.excel(this, 'tableLinks', 'Links')">
 			Export to Excel
 		</a>
-		<table id="tableLinks" class="u-pull-left">
+		<table id="tableLinks" class="u-pull-left u-full-width">
 		</table>
 	</div>
 </div>
@@ -93,7 +100,7 @@ function getSiteInfo(e){
 	var form = $('#formSiteInfo');
 	if (form.isValid()){
 		$.ajax({
-	        url: '/siteinfo',
+	        url: '/dnsscan',
 	        type: 'get',
 	        dataType: 'json',
 	        data: form.serialize(),
@@ -125,23 +132,22 @@ function onSubmitSuccess(obj){
 	$('#errorText').text('').hide();
 	var ls = $('#tableLinks');
 	ls.empty()
-	var hrefs = obj.RespInfo.Hrefs;
+	var hrefs = obj;
 	if (hrefs==null){
 		return;
 	}
-	
-	hrefs.sort();
+
 	var header = $('<tr>')
 		.append($('<th>').text(textLinkFrom + ' '+obj.URL));
+	//ls.append(header)
 	
-	ls.append(header)
-	for(var x =0;x<hrefs.length;x++){
-		var newLink = $('<a>').attr('href',hrefs[x])
-					.text(hrefs[x])
-					.attr('target','_blank');
+	for(var h in hrefs){
+		for(var x=0;x<hrefs[h].length;x++){
+		var newLink = $('<span>').text(hrefs[h][x]);
 					
 		var row = $('<tr>').append($('<td>').append(newLink));
 		ls.append(row);
+		}
 	}
 }
 

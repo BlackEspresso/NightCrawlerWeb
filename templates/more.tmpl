@@ -8,14 +8,24 @@
 <link rel="stylesheet" href="/static/css/normalize.css">
 <link rel="stylesheet" href="/static/css/skeleton.css">
 <style>
-body{
+.mainview{
 	padding-top:20px;
+}
+nav a{
+	margin-left:15px;
+	color:gray;
 }
 </style>
 </head>
 <body>
-
-<div class="container">
+<nav class="container">
+	Menu:
+	<a href="{{.pageDnsScan_url}}" class="active">{{.pageDnsScan_title}}</a>
+	<a href="{{.pageLinks_url}}">{{.pageLinks_title}}</a>
+	<a href="{{.pageScreenshot_url}}" class="active">{{.pageScreenshot_title}}</a>
+	<a href="{{.pageMore_url}}" class="active">{{.pageMore_title}}</a>
+</nav>
+<div class="container mainview">
  <h3><i class="fa fa-info"></i> More </h3>
 <p>
 {{.needmoresnaphosts}} <br>

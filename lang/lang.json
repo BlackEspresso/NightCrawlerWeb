@@ -1,11 +1,11 @@
 {
 "de":{
 		"title":             "Webseite Screenshot",
-		"needmoresnaphosts": "Benötigen Sie mehr Anfragen pro Stunde oder wollen Sie die Erstellung automatisieren (API)?",
+		"needmoresnaphosts": "Benötigen Sie mehr Anfragen oder wollen Sie die Erstellung automatisieren (API)?",
 		"gopro1":            "Wechseln Sie zu Websnapshot Professional für",
 		"gopro2":            "4000 Requests pro Monat",
 		"gopro3":			 "Jederzeit kündbar über ihr PayPal Konto!",
-		"anyquestions":      "Benötigen Sie mehr Details oder haben Sie noch Fragen? Schreiben Sie uns!",
+		"anyquestions":      "Sie wollen mehr Details oder haben noch Fragen? Schreiben Sie uns!",
 		"subtitle":			 "Webseite als Bild/PDF speichern und an Email senden",
 		"emailaddress":      "support@webscreenshot.ifempty.de",
 		"emaillabel":		 "an folgende Email senden",
@@ -22,12 +22,17 @@
 		"findLinksSubtext":"Findet alle Links auf einer Website.",
 		"errTooManyRequestsFromIP":"Zu viele Anfragen. Bitte warten Sie 3 h oder kaufen Sie die Pro Version.",
 		"pageLinks_url":"/pages/de/links",
-		"pageLinks_title": "Link Finder",
+		"pageLinks_title": "Link Scan",
 		"pageScreenshot_url":"/pages/de/screenshot",
+		"pageDnsScan_url":"/pages/de/dnsscan",
+		"pageDnsScan_title": "Dns Scan",
+		"dnsscan_subtitle":"Durchsucht eine Domain nach Subdomains und zeigt deren DNS Eintrag.",
 		"pageScreenshot_title": "Webseite Screenshot",
 		"pageMore_url":"/pages/de/more",
-		"pageMore_title": "Mehr",
-		"linksFrom":"Links von"
+		"pageMore_title": "Professional & Kontakt",
+		"linksFrom":"Links von",
+		"domainLabel":"Domain (nur der Hostname, wie 'google.de')",
+		"scan":"Scan"
 },
 "en":{
 		"title":             "Save website as ...",
