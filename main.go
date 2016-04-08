@@ -115,9 +115,20 @@ func apiDnsScanPublic(g *gin.Context) {
 	ds := new(crawlbase.DNSScanner)
 	ds.LoadConfigFromFile("./resolv.conf")
 
-	lines := strings.Split(string(data), "\n")
+	lines := splitByLine(string(data))
+
 	res := ds.ScanDNS(lines, reqUrl)
 	g.JSON(200, res)
+}
+
+func splitByLine(text string) []string {
+	lines := strings.Split(text, "\n")
+	allLines := make([]string, len(lines))
+	for _, v := range lines {
+		line := strings.Trim(v, "\r \t")
+		allLines = append(allLines, line)
+	}
+	return allLines
 }
 
 func apiSiteInfoPublic(g *gin.Context) {
