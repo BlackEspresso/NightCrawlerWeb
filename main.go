@@ -112,8 +112,11 @@ func apiDnsScanPublic(g *gin.Context) {
 	if err != nil {
 		g.JSON(500, "")
 	}
+	ds := new(crawlbase.DNSScanner)
+	ds.LoadConfigFromFile("./resolv.conf")
+
 	lines := strings.Split(string(data), "\n")
-	res := crawlbase.ScanDNS(lines, reqUrl)
+	res := ds.ScanDNS(lines, reqUrl)
 	g.JSON(200, res)
 }
 
